@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edited by John Mattsson for use with xml2rfc -->
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" []>
+
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<?rfc strict="yes" ?>
+<?rfc toc="yes" ?>
+<?rfc tocdepth="3" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc subcompact="no" ?>
+<?rfc iprnotified="no" ?>
+
+<rfc category="std" ipr="trust200902" docName="draft-ietf-tls-ecdhe-psk-aead-00">
+
+<front>
+
+<title abbrev="ECDHE_PSK_AEAD">ECDHE_PSK with AES-GCM and AES-CCM Cipher Suites for Transport Layer Security (TLS)</title>
+
+<author initials='J.M' surname="Mattsson" fullname='John Mattsson'>
+<organization abbrev="Ericsson">Ericsson AB</organization>
+<address>
+   <postal>
+      <street>SE-164 80 Stockholm</street>
+      <country>Sweden</country>
+   </postal>
+   <phone> +46 76 115 35 01</phone>
+   <email>john.mattsson@ericsson.com</email>
+</address>
+</author>
+
+<author fullname="Daniel Migault" initials="D." surname="Migault">
+<organization> Ericsson </organization>
+<address>
+   <postal>
+      <street> 8400 boulevard Decarie </street>
+      <city> Montreal, QC </city>
+      <code> H4P 2N2 </code>
+      <country> Canada </country>
+   </postal>
+   <phone> +1 514-452-2160 </phone>
+   <email> daniel.migault@ericsson.com </email>
+</address>
+</author>
+
+<date />
+
+<area />
+
+<workgroup />
+
+<keyword />
+
+
+<abstract>
+
+<t>This document defines several new cipher suites for the Transport Layer Security (TLS) protocol. The cipher suites are all based on the Ephemeral Elliptic Curve Diffie-Hellman with Pre-Shared Key (ECDHE_PSK) key exchange together with the Authenticated Encryption with Associated Data (AEAD) algorithms AES-GCM and AES-CCM. PSK provides light and efficient authentication, ECDHE provides perfect forward secrecy, and AES-GCM and AES-CCM provides encryption and integrity protection.
+</t>
+
+</abstract>
+
+
+</front>
+
+
+<middle>
+
+<section title="Requirements notation">
+    <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>.</t>
+</section>
+
+
+<section title="Introduction">
+
+<t>This document defines new cipher suites that provide Pre-Shared Key (PSK) authentication, Perfect Forward Secrecy (PFS), and Authenticated Encryption with Associated Data (AEAD). The cipher suites are defined for version 1.2 or later of the the Transport Layer Security (TLS) <xref target="RFC5246" /> protocol, as well as version 1.2 or later of the Datagram Transport Layer Security (DTLS) protocol <xref target="RFC6347" />.</t>
+
+<t>Pre-Shared Key (PSK) Authentication is widely used in many scenarios. One deployment is 3GPP networks where pre-shared keys are used to authenticate both subscriber and network.  Another deployment is Internet of Things where PSK authentication is often preferred for performance and energy efficiency reasons. In both scenarios the endpoints are owned/controlled by a party that provisions the pre-shared keys and makes sure that they provide a high level of entropy.</t>
+
+<t>Perfect Forward Secrecy (PFS) is a strongly recommended feature in security protocol design and can be accomplished by using an ephemeral Diffie-Hellman key exchange method. Ephemeral Elliptic Curve Diffie-Hellman (ECDHE) provides PFS with excellent performance and small key sizes. ECDHE is mandatory to implement in both HTTP/2 <xref target="RFC7540" /> and CoAP <xref target="RFC7252" />.</t>
+
+<t>AEAD algorithms that combine encryption and integrity protection are strongly recommended <xref target="RFC7525" /> and non-AEAD algorithms are forbidden to use in TLS 1.3 <xref target="I-D.ietf-tls-tls13"/>. The AEAD algorithms considered in this document are AES-GCM and AES-CCM. The use of AES-GCM in TLS is defined in <xref target="RFC5288" /> and the use of AES-CCM is defined in <xref target="RFC6655" />.</t>
+
+<t><xref target="RFC4279"/> defines Pre-Shared Key (PSK) cipher suites for TLS but does not consider Elliptic Curve Cryptography. <xref target="RFC4492"/> introduces Elliptic Curve Cryptography for TLS but does not consider PSK authentication. <xref target="RFC5487"/> describes the use of AES-GCM in combination with PSK authentication, but does not consider ECDHE. <xref target="RFC5489"/> describes the use of PSK in combination with ECDHE but does not consider AES-GCM or AES-CCM.</t>
+
+</section>
+
+
+<section title="ECDHE_PSK with AES-GCM and AES-CCM Cipher Suites">
+
+<t>The cipher suites defined in this document are based on the AES-GCM and AES-CCM Authenticated Encryption with Associated Data (AEAD) algorithms AEAD_AES_128_GCM, AEAD_AES_256_GCM, AEAD_AES_128_CCM, and AEAD_AES_256_CCM defined in <xref target="RFC5116"/>, AEAD_AES_128_CCM_8 and AEAD_AES_256_CCM_8 defined in <xref target="RFC6655"/>. The following cipher suites are defined:</t>
+
+<figure ><artwork align="left"><![CDATA[
+TLS_ECDHE_PSK_WITH_AES_128_GCM_SHA256   = {0xTBD,0xTBD};
+TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384   = {0xTBD,0xTBD};
+TLS_ECDHE_PSK_WITH_AES_128_CCM_8_SHA256 = {0xTBD,0xTBD};
+TLS_ECDHE_PSK_WITH_AES_256_CCM_8_SHA256 = {0xTBD,0xTBD};
+TLS_ECDHE_PSK_WITH_AES_128_CCM_SHA256   = {0xTBD,0xTBD};
+TLS_ECDHE_PSK_WITH_AES_256_CCM_SHA384   = {0xTBD,0xTBD};
+]]></artwork></figure>
+
+<t>For the AES-128 cipher suites, the TLS Pseudorandom Function (PRF) with SHA-256 as the hash function SHALL be used and Clients and Servers MUST NOT negotiate curves of less than 255 bits.</t>
+
+<t>For the AES-256 cipher suites, the TLS PRF with SHA-384 as the hash function SHALL be used and Clients and Servers MUST NOT negotiate curves of less than 384 bits.</t>
+
+<t>When used in TLS 1.2, the keying material is derived as described in <xref target="RFC5489"/> and <xref target="RFC5246"/> and nonces are constructed as described in <xref target="RFC5288"/>, and <xref target="RFC6655"/>. When used in TLS 1.3, the keying material is derived as described in <xref target="I-D.ietf-tls-tls13"/>, and the nonces are constructed as described in <xref target="I-D.ietf-tls-tls13"/>.</t>
+    
+</section>
+
+
+<section title="Applicable TLS Versions">
+
+<t>The cipher suites defined in this document make use of the authenticated encryption with additional data (AEAD) defined in TLS 1.2 <xref target="RFC5246"/> and DTLS 1.2 <xref target="RFC6347" />. Earlier versions of TLS do not have support for AEAD and consequently, these cipher suites MUST NOT be negotiated in TLS versions prior to 1.2. Clients MUST NOT offer these cipher suites if they do not offer TLS 1.2 or later.  Servers, which select an earlier version of TLS MUST NOT select one of these cipher suites.  A client MUST treat the selection of these cipher suites in combination with a version of TLS that does not support AEAD (i.e., TLS 1.1 or earlier) as an error and generate a fatal 'illegal_parameter' TLS alert.</t>
+
+</section>
+
+
+<section title="IANA Considerations">
+
+<t>This document defines the following new cipher suites, whose values have been assigned in the TLS Cipher Suite Registry defined by <xref target="RFC5246"/>.</t>
+
+<figure ><artwork align="left"><![CDATA[
+TLS_ECDHE_PSK_WITH_AES_128_GCM_SHA256   = {0xTBD; 0xTBD} {0xD0,0x01};
+TLS_ECDHE_PSK_WITH_AES_256_GCM_SHA384   = {0xTBD; 0xTBD} {0xD0,0x02};
+TLS_ECDHE_PSK_WITH_AES_128_CCM_8_SHA256 = {0xTBD; 0xTBD} {0xD0,0x03};
+TLS_ECDHE_PSK_WITH_AES_256_CCM_8_SHA256 = {0xTBD; 0xTBD} {0xD0,0x04};
+TLS_ECDHE_PSK_WITH_AES_128_CCM_SHA256   = {0xTBD; 0xTBD} {0xD0,0x05};
+TLS_ECDHE_PSK_WITH_AES_256_CCM_SHA384   = {0xTBD; 0xTBD} {0xD0,0x06};
+]]></artwork></figure>
+
+<t>The cipher suite numbers listed in the second column are numbers used for cipher suite interoperability testing and it's suggested that IANA use these values for assignment.</t>
+
+</section>
+
+
+<section title="Security Considerations">
+
+<t>The security considerations in TLS 1.2 <xref target="RFC5246"/>, DTLS 1.2 <xref target="RFC6347" />, TLS 1.3 <xref target="I-D.ietf-tls-tls13"/>, ECDHE_PSK <xref target="RFC5489"/>, AES-GCM <xref target="RFC5288"/>, and AES-CCM <xref target="RFC6655"/> apply to this document as well.</t>
+
+<t>All the cipher suites defined in this document provide confidentiality, mutual authentication, and perfect forward secrecy. The AES-128 cipher suites provide 128-bit security and the AES-256 cipher suites provide at least 192-bit security. However, AES_128_CCM_8 only provides 64-bit security against message forgery and AES_256_GCM and AES_256_CCM only provide 128-bit security against message forgery.</t>
+
+<t>Use of Pre-Shared Keys of limited entropy (for example, a PSK that is relatively short, or was chosen by a human and thus may contain less entropy than its length would imply) may allow an active attacker to perform a brute-force attack where the attacker attempts to connect to the server and tries different keys. Passive eavesdropping alone is not sufficient. For these reasons the Pre-Shared Keys used for authentication MUST have a security level equal or higher than the cipher suite used, i.e. at least 128-bit for the AES-128 cipher suites and at least 192-bit for the AES-256 cipher suites.</t>
+
+</section>
+
+
+<section title="Acknowledgements">
+
+<t>The authors would like to thank Ilari Liusvaara, Eric Rescorla, Dan Harkins, Russ Housley and Sean Turner for their valuable comments and feedback.</t>
+
+</section>
+
+
+</middle>
+
+
+<back>
+
+
+<references title='Normative References'>
+
+<?rfc include="reference.RFC.2119.xml"?>
+<?rfc include="reference.RFC.4279.xml"?>
+<?rfc include="reference.RFC.5116.xml"?>
+<?rfc include="reference.RFC.5246.xml"?>
+<?rfc include="reference.RFC.5288.xml"?>
+<?rfc include="reference.RFC.6347.xml"?>
+<?rfc include="reference.RFC.6655.xml"?>
+<?rfc include="reference.I-D.ietf-tls-tls13"?>
+
+</references>
+
+
+<references title='Informative References'>
+
+<?rfc include="reference.RFC.4492.xml"?>
+<?rfc include="reference.RFC.5487.xml"?>
+<?rfc include="reference.RFC.5489.xml"?>
+<?rfc include="reference.RFC.7252.xml"?>
+<?rfc include="reference.RFC.7525.xml"?>
+<?rfc include="reference.RFC.7540.xml"?>
+
+</references>
+
+
+</back>
+
+
+</rfc>
